@@ -1,0 +1,135 @@
+<html>
+  <head>
+    <title>$i18n.getText("PageAccess.section.name")</title>
+    <meta name="decorator" content="atl.admin">
+    <meta name="section" content="pageSaveAccessSection/pageSaveAccessWebItem"/>
+    <meta name="tab" content="SaveAccessWebItem"/>
+    $webResourceManager.requireResource("com.atlassian.auiplugin:ajs")
+    $webResourceManager.requireResource("com.winagile.pageaccess.JIRAPageAccess:paginationjskey")
+    $webResourceManager.requireResource("com.winagile.pageaccess.JIRAPageAccess:JIRAPageAccess-resources")
+  </head>
+  <body>
+	  
+<div class="pageList">
+
+#if($ErrorMessage)<div class="error">$ErrorMessage</div>#end
+
+<form class="aui" action="#">
+		  <div class="field-group">
+			  <label for="fromDate">$i18n.getText("PageAccess.section.select.fromDate"):</label>
+			<input type="date" id="fromdatepicker" class="text medium-field" name="fromdatepicker" value="$!fromDate">
+		</div>
+		
+		
+		
+		
+		<div class="field-group">
+			<label for="toDate">$i18n.getText("PageAccess.section.select.toDate"):</label>
+			<input type="date" id="todatepicker" class="text medium-field" name="todatepicker" value="$!toDate">
+		</div>
+		
+		<div class="field-group">
+			<label for="GroupName">$i18n.getText("PageAccess.section.select.group"):</label>
+			        <select class="select" name="groupName" id="groupName">
+			        	<option></option>
+			        	 #foreach($item in $AllGroups)
+			        	 #if($groupName==$item)
+			        	 <option selected="selected">$item</option>
+			        	 #else
+			            <option>$item</option>
+			            #end
+			            #end
+			        </select>
+		</div>
+		
+		<div class="field-group">
+			<label for="SpaceName">$i18n.getText("PageAccess.section.select.space"):</label>
+			        <select class="select" name="spaceName" id="spaceName">
+			        	<option></option>
+			        	 #foreach($item in $AllSpaces)
+			        	 #if($spaceName==$item)
+			        	 <option selected="selected">$item</option>
+			        	 #else
+			            <option>$item</option>
+			            #end
+			            #end
+			        </select>
+		</div>
+		
+		<div class="field-group">
+			<label for="fromDate">$i18n.getText("PageAccess.section.select.username"):</label>
+			<input id="userNameField" name="userNameField" value="$!userName" class="text medium-field autocomplete-user" type="text" style="position: absolute; z-index: 2; background: transparent;"/>
+            <input class="text medium-field autocomplete-user" type="text" name="country" id="autocomplete-ajax-x" disabled="disabled" style="color: #CCC; position: absolute; background: transparent; z-index: 1;"/>
+		</div>
+		
+		
+		<div class="field-group">
+			<label for="fromDate">$i18n.getText("PageAccess.section.select.pagetitle"):</label>
+			<input id="pageTitleField" name="pageTitleField" class="text long-field autocomplete-page" data-max="10" value="$!pageTitle" type="text" style="position: absolute; z-index: 2; background: transparent;">
+			<input class="text long-field autocomplete-page" data-max="10" type="text" name="country" id="autocomplete-ajax-y" disabled="disabled" style="color: #CCC; position: absolute; background: transparent; z-index: 1;"/>
+		</div>
+		
+		
+		<div class="buttons-container">
+	        <div class="buttons">
+	            <input class="button submit" type="button" value='$i18n.getText("PageAccess.section.select.Search")' id="filter-save-button" name="filter-save-button">
+	        </div>
+	    </div>
+	    <div class="buttons-container">
+	        <div class="buttons">
+	            <a href="#" id="removeFilterLink">$i18n.getText("PageAccess.section.select.removefilter")</a>
+	        </div>
+	    </div>
+		</form>
+	
+		<br />
+		<br />
+		<a href="#SearchResult" id="SearchResult">&nbsp;</a>
+  	<div class="attachments-container">
+	  	
+	#if($asResult.size() > 0)
+	    #parse("/templates/pageAccessTable.vm")
+	    
+				<div class="pagination">
+	    			<ul class="pagination">
+	        			#set($pageStart = 1)
+	                	#set($pageEnd = $totalPage)
+	                	#set($range = [$pageStart..$pageEnd])
+	        						
+	        			## Previous Page
+	        			#if($totalPage>1 && $pageNumber!=1)
+	        				#set($prevPagenum=$pageNumber - 1)
+	        				<li><a class="pageAccess" href="#" clickedPage="$!prevPagenum">&lt;&lt; $i18n.getText("PageAccess.pagination.previous")</a></li>
+	        			#end
+	                		
+	        			#foreach ($i in $range)
+	        				#if($pageNumber == $i)
+	        					<li><strong class="pagination-curr">$i</strong></li>
+	        				#else
+	        					<li><a class="pageAccess" href="#" clickedPage="$!i">$i</a></li>
+	        				#end
+	        			#end
+	        						
+	        			## Next Page
+	        			#if($totalPage>1 && $pageNumber!=$totalPage)
+	        				#set($nextPage=$pageNumber+1)
+	        				<li><a class="pageAccess" href="#" clickedPage="$!nextPage">$i18n.getText("PageAccess.pagination.next") &gt;&gt</a></li>
+	    				#end
+	            	</ul>	
+	    		</div>
+	#else
+	    <div class="space-attachments-error">$i18n.getText("PageAccess.section.noResultFound")</div>
+	#end
+    </div>
+    <fieldset class="hiddenfieldset hidden">
+    	<input type="hidden" class="param" name="pageTitleField" value="$!pageTitle"/>
+    	<input type="hidden" class="param" name="userNameField" value="$!userName"/>
+		<input type="hidden" class="param" name="groupNameField" value="$!groupName"/>
+		<input type="hidden" class="param" name="spaceNameField" value="$!spaceName"/>
+        <input type="hidden" class="param" name="totalItem" value="$!totalItem"/>
+		<input type="hidden" class="param" name="fromDate" value="$!fromDate"/>
+		<input type="hidden" class="param" name="toDate" value="$!toDate"/>
+    </fieldset>
+ </div>
+  </body>
+</html>

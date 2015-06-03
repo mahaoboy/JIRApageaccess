@@ -1,0 +1,13 @@
+com\winagile\pageaccess\servlet\filter\JIRAPageAccessTime.class
+com\winagile\jira\activeobject\AccessSaveService.class
+com\winagile\pageaccess\rest\GetInfoItemListModel.class
+com\winagile\pageaccess\rest\AddPageAccessModel.class
+com\winagile\pageaccess\rest\AddPageAccess.class
+com\winagile\pageaccess\MyException.class
+com\winagile\pageaccess\servlet\TestForCheck.class
+com\winagile\pageaccess\rest\GetInfoListRest.class
+com\winagile\pageaccess\rest\GetInfoListModel.class
+com\winagile\pageaccess\servlet\PageAccessStatistics.class
+com\winagile\jira\activeobject\AccessSaveServiceImpl.class
+com\winagile\pageaccess\pageAccessUtil.class
+com\winagile\jira\activeobject\SaveAccess.class

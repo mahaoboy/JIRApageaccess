@@ -1,0 +1,1 @@
+AJS.$(document).ready(function(a){a("#userNameField").autocomplete({serviceUrl:"/rest/addpageaccess/1.0/infomessage/user",onHint:function(b){a("#autocomplete-ajax-x").val(b)}});a("#pageTitleField").autocomplete({serviceUrl:"/rest/addpageaccess/1.0/infomessage/page",onHint:function(b){a("#autocomplete-ajax-y").val(b)}})});

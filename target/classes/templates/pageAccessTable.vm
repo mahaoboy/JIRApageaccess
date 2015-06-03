@@ -1,0 +1,25 @@
+
+   <table class="aui">
+   		<thead>
+    	<tr><th>$i18n.getText("PageAccess.section.pageName")</th>
+    		<th>$i18n.getText("PageAccess.section.pageSpace")</th>
+    		<th>$i18n.getText("PageAccess.section.username")</th>
+    		<th>$i18n.getText("PageAccess.section.accessCount")</th>
+    		<th>$i18n.getText("PageAccess.section.userGroup")</th>
+    		<th>$i18n.getText("PageAccess.section.accessDate")</th>
+    	</tr>
+    	</thead>
+    	<tbody>
+    	 #foreach($item in $asResult)
+          <tr>
+          	<td><a href="$item.get("pageUrl")" target="_blank">$item.get("pageTitle")</a></td>
+          	<td>$item.get("pageSpace")</td>
+          	<td>$item.get("userName")</td>
+          	<td>$item.get("accessCount")</td>
+          	#set($userGroupsWithHtml = $item.get("userGroups"))
+          	<td>$userGroupsWithHtml</td>
+          	#set($uniqueKeyWithHtml = $accessDate.get($item.get("uniqueKey")))
+          	<td><div style="max-height: 100px;overflow-y: auto;">$uniqueKeyWithHtml</div></td>
+          </tr>
+		#end
+    </table>
